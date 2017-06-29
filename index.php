@@ -1,23 +1,22 @@
 <?php
 $conexion = mysqli_connect('127.0.0.1', 'root', 'toor', 'recursamiento', 3306);
+$usuarios = array();
 
 if (!$conexion) {
     die('Error de conexion a mysql');
 } else {
-    $consulta = 'select firstname,lastname,age,gender,email,phone,country_id from users';
+    $consulta = "select * from vw_users";
     $resultado = mysqli_query($conexion, $consulta);
     if (!$resultado) {
         echo 'Error al ejecutar la consulta';
     } elseif ($resultado->num_rows > 0) {
-        $usuarios = array();
         while ($usuario = $resultado->fetch_assoc()) {
-            array_push($suarios, $usuario);
+            array_push($usuarios, $usuario);
         }
     } else {
         echo 'Resultado sin registros de la consulta';
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,15 +40,22 @@ if (!$conexion) {
             </tr>
         </thead>
         <tbody>
+            <?php if (count($usuarios) > 0) { ?>
+            <?php foreach($usuarios as $campo) { ?>
             <tr>
-                <td>BIDKAR</td>
-                <td>ARAGON CARDENAS</td>
-                <td>37</td>
-                <td>MASCULINO</td>
-                <td>BIDKAR@CETIS108.EDU.MX</td>
-                <td>6871234567</td>
-                <td>MEXICO</td>
+                <td><?php echo $campo['firstname']; ?></td>
+                <td><?php echo $campo['lastname']; ?></td>
+                <td><?php echo $campo['age']; ?></td>
+                <td><?php echo $campo['gender']; ?></td>
+                <td><?php echo $campo['email']; ?></td>
+                <td><?php echo $campo['phone']; ?></td>
+                <td><?php echo $campo['country']; ?></td>
             </tr>
+            <?php } } else { ?>
+                <tr>
+                    <td colspan="7">No hay registros de usuarios</td>
+                </tr>
+            <?php } ?>
         </tbody>
     </table>
 </body>
