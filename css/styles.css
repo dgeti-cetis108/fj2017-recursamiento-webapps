@@ -9,3 +9,9 @@ body, h1, h2, h3, h4, h5, h6 {
 /* Tipo .clase */
 
 /* Tipo #id */
+#encabezado {
+    width: 960px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
